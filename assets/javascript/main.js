@@ -1,9 +1,5 @@
-//  Initialize Firebase
-//                    Make sure to match the configuration to the script version number in the HTML
-//                      (Ex. 3.0 != 3.7.0)        
+//  1) Initialize Firebase
 
-
-//  var config = { 
     
     var config = {
         apiKey: "AIzaSyBQbEHL2kTmdntFzTuQLu45CCpl34-ko_c",
@@ -22,11 +18,12 @@ var trainName= "";
 var destination="";
 var firstTrain= "";
 var frequency= "";
-var nextArrival="";
-var minutesAway="";
 
+var currentTime= moment();
 
-//var database = firebase.database();
+console.log(currentTime);
+
+var database = firebase.database();
 
 
 $("#add-train").on("submit", function(event){
@@ -35,15 +32,14 @@ $("#add-train").on("submit", function(event){
     destination= $("#destination").val().trim();
     firstTrain= $("#first-train").val().trim();
     frequency= $("#frequency").val().trim();
-    nextArrival= //moment.js
-    minutesAway= //moment.js
+
 
     database.ref().push({
         trainName: trainName,
         destination: destination,
         firstTrain: firstTrain,
         frequency: frequency
-        
+    
       });
 
 });
@@ -54,27 +50,42 @@ database.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val().destination);
     console.log(snapshot.val().firstTrain);
     console.log(snapshot.val().frequency);
+
+    	//First time
+	var firstTimeConverted = moment(firstTrain, "hh:mm").subtract(1, "years");
+	console.log(firstTimeConverted);
+
+	// Current time
+	var currentTime = moment();
+	console.log("CURRENT TIME:" + moment(currentTime).format("HH:mm"));
+
+	// Difference between times
+	var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+	console.log("DIFFERENCE IN TIME: " + diffTime);
+
+	// Time apart (remainder)
+	var tRemainder = diffTime % frequency;
+	console.log(tRemainder);
+
+	// Mins until train
+	var tMinutesTillTrain = frequency - tRemainder;
+	console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+
+	// Next train
+	var nextTrain = moment().add(tMinutesTillTrain, "minutes").format("hh:mm");
+	console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
     
 
-    $("#train-table").append( "<tr><td>" + snapshot.val().trainName + "</td>   <td>" + snapshot.val().destination + "</td>   <td>" + snapshot.val().frequency + "</td>  <td>" + nextArrival + "</td>  <td>" + minutesAway + "</td>s</tr>");
+    $("#train-table").append( 
+    "<tr><td>" + snapshot.val().trainName + "</td><td>" 
+    + snapshot.val().destination + "</td><td>" 
+    + snapshot.val().frequency + "</td><td>" 
+    + nextTrain + "</td><td>" 
+    + tMinutesTillTrain + "</td></tr>"
+);
 
 
 },function(errorObject){
     console.log ("errors handled: "+ errorObject.code)
 });
 
-
-//Moment.JS  console.log (moment().format("DD/MM/YY"))
-
-
-//datRef.ref().orderByCHild("dateAdded").limitToLast(1).on ("child_added", function (snapshot){
-    //grab all the hTML that was added above
-
-    //console 
-//})
-
-
-
-/*add HTML 
-grab id with jQuery
-append to table*/
