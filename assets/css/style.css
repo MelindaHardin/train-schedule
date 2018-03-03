@@ -1,0 +1,23 @@
+body{
+  margin-right: 10%;
+  margin-left: 10%;
+
+  background-image: url("../images/train-tracks.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  color: white;
+  font-size: large;
+}
+
+#train-table{
+    background-color: antiquewhite;
+    color: black;
+    font-weight: bolder;
+}
+
+h1, p{
+    color: black;
+    
+}

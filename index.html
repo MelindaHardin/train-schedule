@@ -19,6 +19,9 @@
   <!-- Firebase Reference -->
   <script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
 
+  <!--css-->
+  <link href ="assets/css/style.css" type ="text/css" rel ="stylesheet">
+
 
 </head>
 
@@ -27,6 +30,7 @@
         <div class="jumbotron jumbotron-fluid">
                 <div class="container">
                   <h1 class="display-4">Anytime is Train Time</h1>
+                  <h3 id="clock"></h3>
                   <p class="lead">Choo Choo. Chee Chee.</p>
                 </div>
               </div>
@@ -69,7 +73,7 @@
                       
                 <div class="form-group">
                     <label for="frequency">Frequency (min)</label>
-                    <input type="number" class="form-control" id="frequency">
+                    <input type="text" class="form-control" id="frequency">
                     
                </div>
           
